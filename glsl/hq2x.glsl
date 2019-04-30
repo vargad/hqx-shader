@@ -125,11 +125,11 @@ void main()
 	index.x = dot(vec3(pattern[0]), vec3(1, 2, 4)) +
 			  dot(vec3(pattern[1]), vec3(8, 0, 16)) +
 			  dot(vec3(pattern[2]), vec3(32, 64, 128));
-	index.y = dot(vec4(cross), vec4(1, 2, 4, 8)) * (SCALE * SCALE) +
-	          dot(floor(fp * SCALE), vec2(1, SCALE));
+	index.y = dot(vec4(cross.x, cross.y, cross.z, cross.w), vec4(1, 2, 4, 8)) * float(SCALE * SCALE) +
+	          dot(floor(fp * vec2(SCALE, SCALE)), vec2(1, SCALE));
 
-	vec2 step = 1.0 / vec2(256.0, 16.0 * (SCALE * SCALE));
-	vec2 offset = step / 2.0;
+	vec2 step = vec2(1.0,1.0) / vec2(256.0, 16.0 * float(SCALE * SCALE));
+	vec2 offset = step / vec2(2.0, 2.0);
 	vec4 weights = texture2D(LUT, index * step + offset);
 	float sum = dot(weights, vec4(1));
 	vec3 res = pixels * (weights / sum);
